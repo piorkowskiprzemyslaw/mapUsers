@@ -42,28 +42,61 @@ Data::~Data()
 void Data::decode()
 {
     int counter = 0;
+    int reverseCounter = 0;
 
     if(this->optionMaskMap[MSISDN] == true)
     {
-        this->msisdn = new MSISDNumber(&(this->data[0]) , this->fieldSizeMap[MSISDN]);
+        this->msisdn = new MSISDNumber(&(this->data[counter]) , this->fieldSizeMap[MSISDN]);
         this->msisdn->decode();
         std::cout << "MSISDN : " << this->msisdn->getNumberAsNumber() << std::endl;
         counter += this->fieldSizeMap[MSISDN];
     }
-    if(this->optionMaskMap[IMSI])
+    if(this->optionMaskMap[IMSI] == true)
     {
         this->imsi = new IMSINumber(&(this->data[counter]), this->fieldSizeMap[IMSI]);
         this->imsi->decode();
         std::cout << "IMSI   : " << this->imsi->getNumberAsNumber() << std::endl;
         counter += this->fieldSizeMap[IMSI];
     }
-    if(this->optionMaskMap[IMEI])
+    if(this->optionMaskMap[IMEI] == true)
     {
         this->imei = new IMEINumber(&(this->data[counter]), this->fieldSizeMap[IMEI]);
         this->imei->decode();
         std::cout << "IMEI   : " << this->imei->getNumberAsNumber() << std::endl;
         counter += this->fieldSizeMap[IMEI];
     }
+    /*****************  TERAZ ROZKODOWYWANIE OD KONCA *************************/
+    if(this->optionMaskMap[EVENT] == true)
+    {
+        reverseCounter += this->fieldSizeMap[EVENT];
+        this->event = new EventNumber(&(this->data[this->dataLength - reverseCounter]), this->fieldSizeMap[EVENT]);
+        this->event->decode();
+        std::cout << "EVENT : " << this->event->getEventNumber() << std::endl;
+    }
+    if(this->optionMaskMap[SGSN] == true)
+    {
+        //tworzenie obiektu SGSNumber
+        reverseCounter += this->fieldSizeMap[SGSN];
+    }
+    if(this->optionMaskMap[VMSC] == true)
+    {
+        //tworzenie obiektu VMSC
+        reverseCounter += this->fieldSizeMap[VMSC];
+    }
+    if(this->optionMaskMap[RAI] == true)
+    {
+        //tworzenie obiektu RAI
+        reverseCounter += this->fieldSizeMap[RAI];
+    }
+    if(this->optionMaskMap[CI] == true)
+    {
+        //tworzenie obiektu CI
+        reverseCounter += this->fieldSizeMap[CI];
+    }
+    if(this->optionMaskMap[LAI] == true)
+    {
+        //tworzenie obiektu LAI
+        reverseCounter += this->fieldSizeMap[LAI];
+    }
 
-    //dalej zmiana kolejnosci, jak cos to trzeba odkodowywac od tylu  !!
 }
