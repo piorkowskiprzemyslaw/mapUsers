@@ -17,6 +17,7 @@ class Helper
         Helper();
         virtual ~Helper();
         static std::pair<unsigned char, unsigned char> TBCDByteEncode(unsigned char byte);
+        static unsigned long power(unsigned long base, unsigned long exponent);
 };
 
 #endif // HELPER_H

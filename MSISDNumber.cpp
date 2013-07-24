@@ -7,6 +7,7 @@ MSISDNumber::MSISDNumber(unsigned char * data, int dataLength)
 {
     this->data = data;
     this->dataLength = dataLength;
+    this->nmb = 0;
 }
 
 /**
@@ -23,22 +24,22 @@ void MSISDNumber::decode()
 
     for(int i = 1 ; i < this->dataLength ; ++i)
     {
+
         std::pair<int, int> decodedPair = Helper::TBCDByteEncode(this->data[i]);
 
         if(decodedPair.first == 15)
         {
-            return;
+            break;
         } else {
             this->number.push_back(decodedPair.first);
         }
 
         if(decodedPair.second == 15)
         {
-            return;
+            break;
         } else {
             this->number.push_back(decodedPair.second);
         }
-
         //Zakomentowana wersja jest wydajniejsza, ale mniej czytelna, jak co to urzywac wlasnie tej wersji...
         /*
         if(decodedPair.second == 15)
@@ -56,6 +57,13 @@ void MSISDNumber::decode()
             this->number.push_back(decodedPair.second);
         }
         */
+    }
+
+    int i = 1;
+
+    for(std::list<unsigned char>::iterator it = this->number.begin() ; it != this->number.end() ; ++it, ++i)
+    {
+        nmb += ((unsigned long)(*it)) * Helper::power((unsigned long)10, (unsigned long)(this->number.size() - i));
     }
 }
 
@@ -87,15 +95,7 @@ std::list<unsigned char> MSISDNumber::getNumberAsList()
  */
 unsigned long MSISDNumber::getNumberAsNumber()
 {
-    unsigned long returned;
-    int i = 0;
-
-    for(std::list<unsigned char>::iterator it = this->number.begin() ; it != this->number.end() ; ++it, ++i)
-    {
-        returned += ((unsigned long)(*it)) * pow(10.0, (double)(this->number.size()-1-i));
-    }
-
-    return returned;
+    return this->nmb;
 }
 
 /**

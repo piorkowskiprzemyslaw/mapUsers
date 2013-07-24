@@ -29,14 +29,14 @@ Data::Data(unsigned char * beginOfData,
 Data::~Data()
 {
     if(this->msisdn != NULL)    delete(this->msisdn);
-    if(this->imsi != NULL)      delete(this->imsi);
-    if(this->imei != NULL)      delete(this->imei);
-    if(this->lai  != NULL)      delete(this->lai);
-    if(this->ci != NULL)        delete(this->ci);
-    if(this->rai != NULL)       delete(this->rai);
-    if(this->vmsc != NULL)      delete(this->vmsc);
-    if(this->sgsn != NULL)      delete(this->sgsn);
-    if(this->event != NULL)     delete(this->event);
+    if(this->imsi   != NULL)    delete(this->imsi);
+    if(this->imei   != NULL)    delete(this->imei);
+    if(this->lai    != NULL)    delete(this->lai);
+    if(this->ci     != NULL)    delete(this->ci);
+    if(this->rai    != NULL)    delete(this->rai);
+    if(this->vmsc   != NULL)    delete(this->vmsc);
+    if(this->sgsn   != NULL)    delete(this->sgsn);
+    if(this->event  != NULL)    delete(this->event);
 }
 
 void Data::decode()
@@ -45,18 +45,23 @@ void Data::decode()
 
     if(this->optionMaskMap[MSISDN] == true)
     {
-        this->msisdn = new MSISDNumber(this->data , this->fieldSizeMap[MSISDN]);
+        this->msisdn = new MSISDNumber(&(this->data[0]) , this->fieldSizeMap[MSISDN]);
         this->msisdn->decode();
+        std::cout << "MSISDN : " << this->msisdn->getNumberAsNumber() << std::endl;
         counter += this->fieldSizeMap[MSISDN];
     }
     if(this->optionMaskMap[IMSI])
     {
-        //creating new IMSINumber object
+        this->imsi = new IMSINumber(&(this->data[counter]), this->fieldSizeMap[IMSI]);
+        this->imsi->decode();
+        std::cout << "IMSI   : " << this->imsi->getNumberAsNumber() << std::endl;
         counter += this->fieldSizeMap[IMSI];
     }
     if(this->optionMaskMap[IMEI])
     {
-        //creating new IMEINumber object
+        this->imei = new IMEINumber(&(this->data[counter]), this->fieldSizeMap[IMEI]);
+        this->imei->decode();
+        std::cout << "IMEI   : " << this->imei->getNumberAsNumber() << std::endl;
         counter += this->fieldSizeMap[IMEI];
     }
 

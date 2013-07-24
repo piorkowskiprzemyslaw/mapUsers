@@ -17,3 +17,15 @@ std::pair<unsigned char, unsigned char> Helper::TBCDByteEncode(unsigned char byt
     second = second >> 4;
     return std::make_pair(first, second);
 }
+
+unsigned long Helper::power(unsigned long base, unsigned long exponent)
+{
+    unsigned long returned = 1;
+
+    for(int i = 0 ; i < exponent ; ++i)
+    {
+            returned = returned * base;
+    }
+
+    return returned;
+}

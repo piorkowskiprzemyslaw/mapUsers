@@ -24,9 +24,8 @@ class MSISDNumber
         unsigned char extensionByte;
         /**< numer reprezentuje jako  lista powwiazana liczb */
         std::list<unsigned char> number;
-        /**< metoda testujaca odkodowanie numeru */
-        void writeNumber();
-
+        /**< numer reprezentowawny jako unsigned long */
+        unsigned long nmb;
     public:
         MSISDNumber(unsigned char * data, int dataLength);
         ~MSISDNumber();
@@ -34,6 +33,7 @@ class MSISDNumber
         std::list<unsigned char> getNumberAsList();
         unsigned long getNumberAsNumber();
         unsigned char getExtensionByte();
+        void writeNumber();
 };
 
 #endif // MSISDNUMBER_H

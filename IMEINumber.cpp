@@ -1,11 +1,86 @@
 #include "IMEINumber.h"
 
-IMEINumber::IMEINumber()
+/** \brief Domyslny konstruktor
+ *
+ * \param data unsigned char*
+ * \param dataLength int
+ *
+ */
+IMEINumber::IMEINumber(unsigned char * data, int dataLength)
 {
-    //ctor
+    this->data = data;
+    this->dataLength = dataLength;
+    this->nmb = 0;
 }
 
-IMEINumber::~IMEINumber()
+/** \brief Domyslny destruktor
+ */
+IMEINumber::~IMEINumber() {}
+
+/** \brief Metoda dekodujaca pole na numer IMEI
+ *
+ * \return void
+ *
+ */
+void IMEINumber::decode()
 {
-    //dtor
+    for(int i = 0 ; i < this->dataLength ; ++i)
+    {
+        std::pair<int, int> decodedPair = Helper::TBCDByteEncode(this->data[i]);
+
+        if(decodedPair.first == 15)
+        {
+            break;
+        }else{
+            this->number.push_back(decodedPair.first);
+        }
+        if(decodedPair.second == 15)
+        {
+            break;
+        }else{
+            this->number.push_back(decodedPair.second);
+        }
+    }
+
+    int i = 1;
+
+    for(std::list<unsigned char>::iterator it = this->number.begin() ; it != this->number.end() ; ++it, ++i)
+    {
+        nmb += ((unsigned long)(*it)) * Helper::power((unsigned long)10, (unsigned long)(this->number.size() - i));
+    }
+}
+
+/** \brief zwrocenie numeru IMEI w postaci listy
+ *
+ * \return std::list<unsigned char>
+ *
+ */
+std::list<unsigned char> IMEINumber::getNumberAsList()
+{
+    return this->number;
+}
+
+/** \brief Zwrocenie numeru IMEI w postaci liczby
+ *
+ * \return unsigned long
+ *
+ */
+unsigned long IMEINumber::getNumberAsNumber()
+{
+    return this->nmb;
+}
+
+/** \brief Wypisanie numeru IMEI
+ *
+ * \return void
+ *
+ */
+void IMEINumber::writeNumber()
+{
+    for(std::list<unsigned char>::iterator it = this->number.begin() ;
+        it != this->number.end() ; ++it)
+    {
+        std::cout << int(*it) << " ";
+    }
+    std::cout << '\n';
 }

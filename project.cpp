@@ -13,7 +13,7 @@
  */
 int main()
 {
-    std::cout << "Map users to cell in process..." << sizeof(unsigned long) << std::endl;
+    std::cout << "Map users to cell in process..." << std::endl;
     Connection * conn;
     Interpreter * interpreter = new Interpreter();
     int dataSize;

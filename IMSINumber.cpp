@@ -1,11 +1,81 @@
 #include "IMSINumber.h"
 
-IMSINumber::IMSINumber()
+/**
+ * \brief Domyslny konstruktor
+ */
+IMSINumber::IMSINumber(unsigned char * data, int dataLength)
 {
-    //ctor
+    this->data = data;
+    this->dataLength = dataLength;
+    this->nmb = 0;
 }
 
-IMSINumber::~IMSINumber()
+/**
+ * \brief Domyslny destruktor
+ */
+IMSINumber::~IMSINumber() {}
+
+/**
+ * \brief Dekodowanie pola do numeru imsi
+ */
+void IMSINumber::decode()
 {
-    //dtor
+    for(int i = 0 ; i < this->dataLength ; ++i)
+    {
+        std::pair<int, int> decodedPair = Helper::TBCDByteEncode(this->data[i]);
+
+        if(decodedPair.first == 15)
+        {
+            break;
+        }else{
+            this->number.push_back(decodedPair.first);
+        }
+        if(decodedPair.second == 15)
+        {
+            break;
+        }else{
+            this->number.push_back(decodedPair.second);
+        }
+    }
+
+    int i = 1;
+
+    for(std::list<unsigned char>::iterator it = this->number.begin() ; it != this->number.end() ; ++it, ++i)
+    {
+        nmb += ((unsigned long)(*it)) * Helper::power((unsigned long)10, (unsigned long)(this->number.size() - i));
+    }
+}
+
+/**
+ * \brief Zwrocenie numeru w postaci listy
+ * \return std::list<unsigned char>
+ */
+std::list<unsigned char> IMSINumber::getNumberAsList()
+{
+    return this->number;
+}
+
+/**
+ * \brief Zwrocenie numeru w postaci liczby
+ * \return unsigned long
+ *
+ */
+unsigned long IMSINumber::getNumberAsNumber()
+{
+    return nmb;
+}
+
+/** \brief Wypisanie numeru IMSI
+ *
+ * \return void
+ *
+ */
+void IMSINumber::writeNumber()
+{
+    for(std::list<unsigned char>::iterator it = this->number.begin() ;
+        it != this->number.end() ; ++it)
+    {
+        std::cout << int(*it) << " ";
+    }
+    std::cout << '\n';
 }
