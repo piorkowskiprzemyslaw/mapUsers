@@ -5,6 +5,7 @@
 #include <fstream>
 #include <list>
 #include <iterator>
+#include <math.h>
 #include "Helper.h"
 
 /**
@@ -23,7 +24,6 @@ class MSISDNumber
         unsigned char extensionByte;
         /**< numer reprezentuje jako  lista powwiazana liczb */
         std::list<unsigned char> number;
-
         /**< metoda testujaca odkodowanie numeru */
         void writeNumber();
 
@@ -31,6 +31,9 @@ class MSISDNumber
         MSISDNumber(unsigned char * data, int dataLength);
         ~MSISDNumber();
         void decode();
+        std::list<unsigned char> getNumberAsList();
+        unsigned long getNumberAsNumber();
+        unsigned char getExtensionByte();
 };
 
 #endif // MSISDNUMBER_H

@@ -27,8 +27,6 @@ void MSISDNumber::decode()
 
         if(decodedPair.first == 15)
         {
-                std::cout << "zdekodowawano!" << std::endl;
-                this->writeNumber();
             return;
         } else {
             this->number.push_back(decodedPair.first);
@@ -36,8 +34,6 @@ void MSISDNumber::decode()
 
         if(decodedPair.second == 15)
         {
-                std::cout << "zdekodowawano!" << std::endl;
-                this->writeNumber();
             return;
         } else {
             this->number.push_back(decodedPair.second);
@@ -74,4 +70,39 @@ void MSISDNumber::writeNumber()
         std::cout << int(*it) << " ";
     }
     std::cout << '\n';
+}
+
+/**
+ * \brief Zwraca numer w postaci listy powiazanej unsigned charow
+ * \return std::list<unsigned char>
+ */
+std::list<unsigned char> MSISDNumber::getNumberAsList()
+{
+    return this->number;
+}
+
+/**
+ * \brief Zwracaa numer w postaci liczby unsigned long
+ * \return unsigned long
+ */
+unsigned long MSISDNumber::getNumberAsNumber()
+{
+    unsigned long returned;
+    int i = 0;
+
+    for(std::list<unsigned char>::iterator it = this->number.begin() ; it != this->number.end() ; ++it, ++i)
+    {
+        returned += ((unsigned long)(*it)) * pow(10.0, (double)(this->number.size()-1-i));
+    }
+
+    return returned;
+}
+
+/**
+ * \brief Pobriera extension byte numeru pola MSISDN
+ * \return unsigned char
+ */
+unsigned char MSISDNumber::getExtensionByte()
+{
+    return this->extensionByte;
 }

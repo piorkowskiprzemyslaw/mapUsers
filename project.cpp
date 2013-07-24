@@ -13,7 +13,7 @@
  */
 int main()
 {
-    std::cout << "Map users to cell in process..." << std::endl;
+    std::cout << "Map users to cell in process..." << sizeof(unsigned long) << std::endl;
     Connection * conn;
     Interpreter * interpreter = new Interpreter();
     int dataSize;
@@ -42,7 +42,7 @@ int main()
         std::cout << "Version : " << interpreter->getVersion() << std::endl;
         std::cout << "Count   : " << interpreter->getMessagesCounter() << std::endl;
         std::cout << "Length  : " << interpreter->getLength() << std::endl;
-        std::cout << "Writing data to buffer \n" << std::endl;
+        std::cout << "Writing data to file \n" << std::endl;
         interpreter->writeBufferToFile();
 
     }

@@ -33,15 +33,10 @@ Interpreter::~Interpreter()
     {
         delete(this->buffer);
     }
-    if(this->optionMask != NULL)
-    {
-        delete(this->optionMask);
-    }
-
 }
 
 /**
- * \brief Metoda za pomoca ktorej ladujemy dane do bufora.
+ * \brief Metoda za pomoca ktorej usuwamy stary bufor i ladujemy nowy.
  *
  * \param buffer C-style chain of data
  * \param bufferLength size of buffer
@@ -49,6 +44,11 @@ Interpreter::~Interpreter()
  */
 void Interpreter::loadBuffer(unsigned char * bufferIn,int bufferLengthIn)
 {
+    if(this->buffer != NULL)
+    {
+        delete(this->buffer);
+    }
+
     this->buffer = new unsigned char[bufferLengthIn];
     this->bufferLength = bufferLengthIn;
     for(int i = 0 ; i < bufferLengthIn ; ++i)
@@ -82,9 +82,7 @@ void Interpreter::interpreteData()
     this->data = new Data(&(this->buffer[5]), this->getLength(), &(this->fieldSizeMap), &(this->optionMaskMap));
     this->data->decode();
 
-    std::cout << "1" << std::endl;
     delete(this->optionMask);
-    std::cout << "2" << std::endl;
     delete(this->data);
 }
 
