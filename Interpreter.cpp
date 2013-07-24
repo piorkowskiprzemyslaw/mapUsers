@@ -81,6 +81,11 @@ void Interpreter::interpreteData()
 
     this->data = new Data(&(this->buffer[5]), this->getLength(), &(this->fieldSizeMap), &(this->optionMaskMap));
     this->data->decode();
+
+    std::cout << "1" << std::endl;
+    delete(this->optionMask);
+    std::cout << "2" << std::endl;
+    delete(this->data);
 }
 
 /**

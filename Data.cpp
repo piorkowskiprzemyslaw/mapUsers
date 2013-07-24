@@ -12,6 +12,9 @@ Data::Data(unsigned char * beginOfData,
     this->dataLength = dataLength;
     this->fieldSizeMap = *(fieldSizeMap);
     this->optionMaskMap = *(optionMaskMap);
+    this->msisdn = NULL;
+    this->imsi = NULL;
+    this->imei = NULL;
 }
 
 /**
@@ -23,14 +26,17 @@ Data::~Data()
     {
         delete(this->msisdn);
     }
+    std::cout << "3" << std::endl;
     if(this->imsi != NULL)
     {
         delete(this->imsi);
     }
+    std::cout << "4" << std::endl;
     if(this->imei != NULL)
     {
         delete(this->imei);
     }
+    std::cout << "5" << std::endl;
 }
 
 void Data::decode()
