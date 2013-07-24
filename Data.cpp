@@ -36,8 +36,10 @@ Data::~Data()
 void Data::decode()
 {
     int counter = 0;
-    if(this->optionMaskMap[MSISDN])
+
+    if(this->optionMaskMap[MSISDN] == true)
     {
+        std::cout << "Dekoduje MSISDN !" << std::endl;
         this->msisdn = new MSISDNumber(this->data , this->fieldSizeMap[MSISDN]);
         this->msisdn->decode();
         counter += this->fieldSizeMap[MSISDN];

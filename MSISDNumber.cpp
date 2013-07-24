@@ -1,13 +1,22 @@
 #include "MSISDNumber.h"
 
+/**
+ * \brief Konstruktor ustawia data i dataLength. Nie kopiuje danych.
+ */
 MSISDNumber::MSISDNumber(unsigned char * data, int dataLength)
 {
     this->data = data;
     this->dataLength = dataLength;
 }
 
+/**
+ * \brief Destruktor nie musi nic robic, bo nie byla przydzielna pamiec w konstruktorze.
+ */
 MSISDNumber::~MSISDNumber() {}
 
+/**
+ * \brief Dekodowanie pola danych do sensownego numeru.
+ */
 void MSISDNumber::decode()
 {
     this->extensionByte = this->data[0];
@@ -18,6 +27,8 @@ void MSISDNumber::decode()
 
         if(decodedPair.first == 15)
         {
+                std::cout << "zdekodowawano!" << std::endl;
+                this->writeNumber();
             return;
         } else {
             this->number.push_back(decodedPair.first);
@@ -25,6 +36,8 @@ void MSISDNumber::decode()
 
         if(decodedPair.second == 15)
         {
+                std::cout << "zdekodowawano!" << std::endl;
+                this->writeNumber();
             return;
         } else {
             this->number.push_back(decodedPair.second);
@@ -48,4 +61,17 @@ void MSISDNumber::decode()
         }
         */
     }
+}
+
+/**
+ * \brief Funkcja testowa sprawdzajaca poprawnosc dekodowania poprzez zapis do pliku.
+ */
+void MSISDNumber::writeNumber()
+{
+    for(std::list<unsigned char>::iterator it = this->number.begin() ;
+        it != this->number.end() ; ++it)
+    {
+        std::cout << int(*it) << " ";
+    }
+    std::cout << '\n';
 }

@@ -79,7 +79,8 @@ void Interpreter::interpreteData()
 
     this->length = this->buffer[4];
 
-    this->data = new Data(this->buffer, this->getLength(), &(this->fieldSizeMap), &(this->optionMaskMap));
+    this->data = new Data(&(this->buffer[5]), this->getLength(), &(this->fieldSizeMap), &(this->optionMaskMap));
+    this->data->decode();
 }
 
 /**

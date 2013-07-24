@@ -6,7 +6,7 @@
 //
 
 /**
- * \brief Program mapujacy uzytkownikow do odpowiednich LAC
+ * \brief Program mapujacy uzytkownikow do odpowiednich CI
  *
  * \author Przemyslaw Piorkowski  <piorkowskiprzemyslaw@gmail.com>
  *

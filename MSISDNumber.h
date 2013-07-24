@@ -2,7 +2,9 @@
 #define MSISDNUMBER_H
 
 #include <iostream>
+#include <fstream>
 #include <list>
+#include <iterator>
 #include "Helper.h"
 
 /**
@@ -13,10 +15,17 @@
 class MSISDNumber
 {
     private:
+        /**< blok danych zawierajacy pole msisdn */
         unsigned char * data;
+        /**< dlugosc bloku danych */
         int dataLength;
+        /**< przedrostek przed msisdn */
         unsigned char extensionByte;
+        /**< numer reprezentuje jako  lista powwiazana liczb */
         std::list<unsigned char> number;
+
+        /**< metoda testujaca odkodowanie numeru */
+        void writeNumber();
 
     public:
         MSISDNumber(unsigned char * data, int dataLength);
