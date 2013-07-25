@@ -70,20 +70,27 @@ void Interpreter::interpreteData()
         return;
     }
 
-    this->version = this->buffer[0];
-    this->messagesCounter = this->buffer[1];
+    unsigned int counter = 0;
 
-    this->optionMask = new OptionMask(this->buffer[2], this->buffer[3]);
-    this->optionMask->decodeOptionMask();
-    this->optionMaskMap = *(this->optionMask->getOptionMaskMap());
+    this->version = this->buffer[counter];
+    this->messagesCounter = this->buffer[++counter];
 
-    this->length = this->buffer[4];
+    for(int i = 0 ; i < this->messagesCounter ; ++i)
+    {
+            this->optionMask = new OptionMask(this->buffer[++counter], this->buffer[++counter]);
+            this->optionMask->decodeOptionMask();
+            this->optionMaskMap = *(this->optionMask->getOptionMaskMap());
 
-    this->data = new Data(&(this->buffer[5]), this->getLength(), &(this->fieldSizeMap), &(this->optionMaskMap));
-    this->data->decode();
+            this->length = this->buffer[++counter];
 
-    delete(this->optionMask);
-    delete(this->data);
+            this->data = new Data(&(this->buffer[counter+1]), this->getLength(), &(this->fieldSizeMap), &(this->optionMaskMap));
+            this->data->decode();
+
+            counter += this->length;
+
+            delete(this->optionMask);
+            delete(this->data);
+    }
 }
 
 /**

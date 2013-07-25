@@ -32,7 +32,7 @@ class Data
         /**< Blok pamieci w ktorym sa dane */
         unsigned char * data;
         /**< Dlugosc bloku pamieci z danymi */
-        int dataLength;
+        unsigned int dataLength;
         /**< pole MSISDN */
         MSISDNumber* msisdn;
         /**< pole IMSI */
@@ -58,6 +58,7 @@ class Data
              std::map<FieldName, bool>* optionMapMask);
         ~Data();
         void decode();
+        unsigned int getDataLength();
 
 };
 

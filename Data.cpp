@@ -41,8 +41,8 @@ Data::~Data()
 
 void Data::decode()
 {
-    int counter = 0;
-    int reverseCounter = 0;
+    unsigned int counter = 0;
+    unsigned int reverseCounter = 0;
 
     if(this->optionMaskMap[MSISDN] == true)
     {
@@ -89,18 +89,36 @@ void Data::decode()
     }
     if(this->optionMaskMap[RAI] == true)
     {
-        //tworzenie obiektu RAI
+        //tego poki co nie rozkodowuje.
         reverseCounter += this->fieldSizeMap[RAI];
     }
     if(this->optionMaskMap[CI] == true)
     {
-        //tworzenie obiektu CI
         reverseCounter += this->fieldSizeMap[CI];
+        this->ci = new CINumber(&(this->data[this->dataLength - reverseCounter]),this->fieldSizeMap[CI]);
+        this->ci->decode();
+        std::cout << "CI     : " << this->ci->getNumber() << std::endl;
     }
     if(this->optionMaskMap[LAI] == true)
     {
-        //tworzenie obiektu LAI
         reverseCounter += this->fieldSizeMap[LAI];
+        this->lai = new LAINumber(&(this->data[this->dataLength - reverseCounter]),this->fieldSizeMap[LAI]);
+        this->lai->decode();
+        std::cout << "LAC    : " << this->lai->getNumber() << std::endl;
     }
 
+    if((counter + reverseCounter) > dataLength)
+    {
+        std::cout  << "FATAL ERROR" << std::endl;
+    }
+}
+
+/** \brief Pobiera dlugosc tego pola data
+ *
+ * \return unsigned int
+ *
+ */
+unsigned int Data::getDataLength()
+{
+    return this->dataLength;
 }

@@ -22,7 +22,7 @@ unsigned long Helper::power(unsigned long base, unsigned long exponent)
 {
     unsigned long returned = 1;
 
-    for(int i = 0 ; i < exponent ; ++i)
+    for(unsigned int i = 0 ; i < exponent ; ++i)
     {
             returned = returned * base;
     }
