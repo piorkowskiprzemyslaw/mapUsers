@@ -10,7 +10,8 @@ LAINumber::LAINumber(unsigned char * data, int dataLength)
 {
     this->data = data;
     this->dataLength = dataLength;
-    this->number = 0;
+    this->lac = 0;
+    this->mncNumber = 0;
 }
 
 /** \brief Domyslny destruktor
@@ -24,9 +25,16 @@ LAINumber::~LAINumber() {}
  */
 void LAINumber::decode()
 {
-    this->number = this->data[3];
-    this->number = this->number << 8 ;
-    this->number += this->data[4];
+    std::pair<unsigned int, unsigned int> decodedPair = Helper::TBCDByteEncode(this->data[2]);
+    this->mnc.push_back(decodedPair.first);
+    this->mnc.push_back(decodedPair.second);
+
+    this->mncNumber = 10 * decodedPair.first;
+    this->mncNumber += decodedPair.second;
+
+    this->lac = this->data[3];
+    this->lac = this->lac << 8 ;
+    this->lac += this->data[4];
 }
 
 /** \brief Pobranie numeru LAI
@@ -34,7 +42,27 @@ void LAINumber::decode()
  * \return unsigned int
  *
  */
-unsigned int LAINumber::getNumber()
+unsigned int LAINumber::getLAC()
 {
-    return this->number;
+    return this->lac;
+}
+
+/** \brief Pobieranie numeru mnc w postaci listy
+ *
+ * \return unsigned int
+ *
+ */
+std::list<unsigned char> LAINumber::getMNCList()
+{
+    return this->mnc;
+}
+
+/** \brief Pobranie numeru mnc w postaci liczby
+ *
+ * \return unsigned int
+ *
+ */
+unsigned int LAINumber::getMNCNumber()
+{
+    return this->mncNumber;
 }

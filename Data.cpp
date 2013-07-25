@@ -104,7 +104,8 @@ void Data::decode()
         reverseCounter += this->fieldSizeMap[LAI];
         this->lai = new LAINumber(&(this->data[this->dataLength - reverseCounter]),this->fieldSizeMap[LAI]);
         this->lai->decode();
-        std::cout << "LAC    : " << this->lai->getNumber() << std::endl;
+        std::cout << "LAC    : " << this->lai->getLAC() << std::endl;
+        std::cout << "MNC    : " << this->lai->getMNCNumber() << std::endl;
     }
 
     if((counter + reverseCounter) > dataLength)
