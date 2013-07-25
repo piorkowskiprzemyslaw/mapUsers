@@ -20,9 +20,10 @@ IMSINumber::~IMSINumber() {}
  */
 void IMSINumber::decode()
 {
+    std::pair<int, int> decodedPair;
     for(int i = 0 ; i < this->dataLength ; ++i)
     {
-        std::pair<int, int> decodedPair = Helper::TBCDByteEncode(this->data[i]);
+        decodedPair = Helper::TBCDByteEncode(this->data[i]);
         if(decodedPair.first == 15)
         {
             break;

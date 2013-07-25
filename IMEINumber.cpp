@@ -24,10 +24,10 @@ IMEINumber::~IMEINumber() {}
  */
 void IMEINumber::decode()
 {
+    std::pair<int, int> decodedPair;
     for(int i = 0 ; i < this->dataLength ; ++i)
     {
-        std::pair<int, int> decodedPair = Helper::TBCDByteEncode(this->data[i]);
-
+        decodedPair = Helper::TBCDByteEncode(this->data[i]);
         if(decodedPair.first == 15)
         {
             break;
@@ -41,9 +41,7 @@ void IMEINumber::decode()
             this->number.push_back(decodedPair.second);
         }
     }
-
     int i = 1;
-
     for(std::list<unsigned char>::iterator it = this->number.begin() ; it != this->number.end() ; ++it, ++i)
     {
         nmb += ((unsigned long)(*it)) * Helper::power((unsigned long)10, (unsigned long)(this->number.size() - i));

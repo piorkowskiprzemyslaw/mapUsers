@@ -82,8 +82,10 @@ void Data::decode()
     }
     if(this->optionMaskMap[VMSC] == true)
     {
-        //tworzenie obiektu VMSC
         reverseCounter += this->fieldSizeMap[VMSC];
+        this->vmsc = new VMSCNumber(&(this->data[this->dataLength - reverseCounter]),this->fieldSizeMap[VMSC]);
+        this->vmsc->decode();
+        std::cout << "VMSC   : " << this->vmsc->getAsNumber() << std::endl;
     }
     if(this->optionMaskMap[RAI] == true)
     {

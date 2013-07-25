@@ -21,9 +21,10 @@ MSISDNumber::~MSISDNumber() {}
 void MSISDNumber::decode()
 {
     this->extensionByte = this->data[0];
+    std::pair<int, int> decodedPair;
     for(int i = 1 ; i < this->dataLength ; ++i)
     {
-        std::pair<int, int> decodedPair = Helper::TBCDByteEncode(this->data[i]);
+        decodedPair = Helper::TBCDByteEncode(this->data[i]);
         if(decodedPair.first == 15)
         {
             break;
