@@ -2,10 +2,8 @@
 #define MSISDNUMBER_H
 
 #include <iostream>
-#include <fstream>
 #include <list>
 #include <iterator>
-#include <math.h>
 #include "Helper.h"
 
 /**
@@ -30,8 +28,8 @@ class MSISDNumber
         MSISDNumber(unsigned char * data, int dataLength);
         ~MSISDNumber();
         void decode();
-        std::list<unsigned char> getNumberAsList();
-        unsigned long getNumberAsNumber();
+        std::list<unsigned char> getAsList();
+        unsigned long getAsNumber();
         unsigned char getExtensionByte();
         void writeNumber();
 };

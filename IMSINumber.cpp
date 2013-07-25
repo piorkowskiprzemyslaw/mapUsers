@@ -23,7 +23,6 @@ void IMSINumber::decode()
     for(int i = 0 ; i < this->dataLength ; ++i)
     {
         std::pair<int, int> decodedPair = Helper::TBCDByteEncode(this->data[i]);
-
         if(decodedPair.first == 15)
         {
             break;
@@ -37,9 +36,7 @@ void IMSINumber::decode()
             this->number.push_back(decodedPair.second);
         }
     }
-
     int i = 1;
-
     for(std::list<unsigned char>::iterator it = this->number.begin() ; it != this->number.end() ; ++it, ++i)
     {
         nmb += ((unsigned long)(*it)) * Helper::power((unsigned long)10, (unsigned long)(this->number.size() - i));
@@ -50,7 +47,7 @@ void IMSINumber::decode()
  * \brief Zwrocenie numeru w postaci listy
  * \return std::list<unsigned char>
  */
-std::list<unsigned char> IMSINumber::getNumberAsList()
+std::list<unsigned char> IMSINumber::getAsList()
 {
     return this->number;
 }
@@ -60,7 +57,7 @@ std::list<unsigned char> IMSINumber::getNumberAsList()
  * \return unsigned long
  *
  */
-unsigned long IMSINumber::getNumberAsNumber()
+unsigned long IMSINumber::getAsNumber()
 {
     return nmb;
 }

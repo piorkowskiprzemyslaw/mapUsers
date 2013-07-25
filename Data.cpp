@@ -48,21 +48,21 @@ void Data::decode()
     {
         this->msisdn = new MSISDNumber(&(this->data[counter]) , this->fieldSizeMap[MSISDN]);
         this->msisdn->decode();
-        std::cout << "MSISDN : " << this->msisdn->getNumberAsNumber() << std::endl;
+        std::cout << "MSISDN : " << this->msisdn->getAsNumber() << std::endl;
         counter += this->fieldSizeMap[MSISDN];
     }
     if(this->optionMaskMap[IMSI] == true)
     {
         this->imsi = new IMSINumber(&(this->data[counter]), this->fieldSizeMap[IMSI]);
         this->imsi->decode();
-        std::cout << "IMSI   : " << this->imsi->getNumberAsNumber() << std::endl;
+        std::cout << "IMSI   : " << this->imsi->getAsNumber() << std::endl;
         counter += this->fieldSizeMap[IMSI];
     }
     if(this->optionMaskMap[IMEI] == true)
     {
         this->imei = new IMEINumber(&(this->data[counter]), this->fieldSizeMap[IMEI]);
         this->imei->decode();
-        std::cout << "IMEI   : " << this->imei->getNumberAsNumber() << std::endl;
+        std::cout << "IMEI   : " << this->imei->getAsNumber() << std::endl;
         counter += this->fieldSizeMap[IMEI];
     }
     /*****************  TERAZ ROZKODOWYWANIE OD KONCA *************************/
@@ -71,12 +71,14 @@ void Data::decode()
         reverseCounter += this->fieldSizeMap[EVENT];
         this->event = new EventNumber(&(this->data[this->dataLength - reverseCounter]), this->fieldSizeMap[EVENT]);
         this->event->decode();
-        std::cout << "EVENT : " << this->event->getEventNumber() << std::endl;
+        std::cout << "EVENT  : " << this->event->getEventNumber() << std::endl;
     }
     if(this->optionMaskMap[SGSN] == true)
     {
-        //tworzenie obiektu SGSNumber
         reverseCounter += this->fieldSizeMap[SGSN];
+        this->sgsn = new SGSNumber(&(this->data[this->dataLength - reverseCounter]), this->fieldSizeMap[SGSN]);
+        this->sgsn->decode();
+        std::cout << "SGSN   : " << this->sgsn->getAsNumber() << std::endl;
     }
     if(this->optionMaskMap[VMSC] == true)
     {

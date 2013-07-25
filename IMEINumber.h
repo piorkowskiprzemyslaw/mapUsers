@@ -20,8 +20,8 @@ class IMEINumber
         IMEINumber(unsigned char * data, int dataLength);
         ~IMEINumber();
         void decode();
-        std::list<unsigned char> getNumberAsList();
-        unsigned long getNumberAsNumber();
+        std::list<unsigned char> getAsList();
+        unsigned long getAsNumber();
         void writeNumber();
 };
 

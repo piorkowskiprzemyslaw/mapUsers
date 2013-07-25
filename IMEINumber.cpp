@@ -55,7 +55,7 @@ void IMEINumber::decode()
  * \return std::list<unsigned char>
  *
  */
-std::list<unsigned char> IMEINumber::getNumberAsList()
+std::list<unsigned char> IMEINumber::getAsList()
 {
     return this->number;
 }
@@ -65,7 +65,7 @@ std::list<unsigned char> IMEINumber::getNumberAsList()
  * \return unsigned long
  *
  */
-unsigned long IMEINumber::getNumberAsNumber()
+unsigned long IMEINumber::getAsNumber()
 {
     return this->nmb;
 }

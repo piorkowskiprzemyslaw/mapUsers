@@ -21,19 +21,15 @@ MSISDNumber::~MSISDNumber() {}
 void MSISDNumber::decode()
 {
     this->extensionByte = this->data[0];
-
     for(int i = 1 ; i < this->dataLength ; ++i)
     {
-
         std::pair<int, int> decodedPair = Helper::TBCDByteEncode(this->data[i]);
-
         if(decodedPair.first == 15)
         {
             break;
         } else {
             this->number.push_back(decodedPair.first);
         }
-
         if(decodedPair.second == 15)
         {
             break;
@@ -58,9 +54,7 @@ void MSISDNumber::decode()
         }
         */
     }
-
     int i = 1;
-
     for(std::list<unsigned char>::iterator it = this->number.begin() ; it != this->number.end() ; ++it, ++i)
     {
         nmb += ((unsigned long)(*it)) * Helper::power((unsigned long)10, (unsigned long)(this->number.size() - i));
@@ -84,7 +78,7 @@ void MSISDNumber::writeNumber()
  * \brief Zwraca numer w postaci listy powiazanej unsigned charow
  * \return std::list<unsigned char>
  */
-std::list<unsigned char> MSISDNumber::getNumberAsList()
+std::list<unsigned char> MSISDNumber::getAsList()
 {
     return this->number;
 }
@@ -93,7 +87,7 @@ std::list<unsigned char> MSISDNumber::getNumberAsList()
  * \brief Zwracaa numer w postaci liczby unsigned long
  * \return unsigned long
  */
-unsigned long MSISDNumber::getNumberAsNumber()
+unsigned long MSISDNumber::getAsNumber()
 {
     return this->nmb;
 }

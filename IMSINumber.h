@@ -25,8 +25,8 @@ class IMSINumber
         IMSINumber(unsigned char* data, int dataLength);
         ~IMSINumber();
         void decode();
-        std::list<unsigned char> getNumberAsList();
-        unsigned long getNumberAsNumber();
+        std::list<unsigned char> getAsList();
+        unsigned long getAsNumber();
         void writeNumber();
 };
 

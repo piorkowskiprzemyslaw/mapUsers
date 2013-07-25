@@ -30,10 +30,10 @@ Data.o: Data.cpp Data.h FieldName.h MSISDNumber.cpp MSISDNumber.h IMSINumber.cpp
 MSISDNumber.o: MSISDNumber.cpp MSISDNumber.h Helper.cpp Helper.h
 	$(CC) $(CFLAGS) MSISDNumber.cpp -o MSISDNumber.o
 
-IMSINumber.o: IMSINumber.cpp IMSINumber.h
+IMSINumber.o: IMSINumber.cpp IMSINumber.h Helper.cpp Helper.h
 	$(CC) $(CFLAGS) IMSINumber.cpp -o IMSINumber.o
 
-IMEINumber.o: IMEINumber.cpp IMEINumber.h
+IMEINumber.o: IMEINumber.cpp IMEINumber.h Helper.cpp Helper.h
 	$(CC) $(CFLAGS) IMEINumber.cpp -o IMEINumber.o
 
 LAINumber.o: LAINumber.cpp LAINumber.h
