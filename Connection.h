@@ -31,6 +31,8 @@ class Connection
         int bufferLength;
         /**< wskaznik na bufor danych */
         unsigned char * buffer;
+        /**< dlugosc ostatanio pobranej ramki */
+        int lengthOfLastRecivedDataSet;
         /**< struktura opisujaca adres naszej maszyny */
         sockaddr_in myAddress;
         /**< struktura opisujaca adres maszyny nadawczej */
