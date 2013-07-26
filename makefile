@@ -4,7 +4,7 @@ CFLAGS=-c -Wall -pedantic
 all: mapUsers
 
 mapUsers: project.o Interpreter.o Connection.o SocketException.o OptionMask.o Data.o Data.o MSISDNumber.o IMSINumber.o IMEINumber.o LAINumber.o CINumber.o RAINumber.o VMSCNumber.o SGSNumber.o EventNumber.o Helper.o
-	$(CC) project.o Interpreter.o Connection.o SocketException.o OptionMask.o Data.o MSISDNumber.o IMSINumber.o IMEINumber.o LAINumber.o CINumber.o RAINumber.o VMSCNumber.o SGSNumber.o EventNumber.o Helper.o -o mapUsers -lpthread
+	$(CC) project.o Interpreter.o Connection.o SocketException.o OptionMask.o Data.o MSISDNumber.o IMSINumber.o IMEINumber.o LAINumber.o CINumber.o RAINumber.o VMSCNumber.o SGSNumber.o EventNumber.o Helper.o -o mapUsers
 
 project.o: project.cpp Interpreter.cpp Interpreter.h Connection.cpp Connection.h
 	$(CC) $(CFLAGS) project.cpp -o project.o
