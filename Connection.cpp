@@ -30,6 +30,7 @@ Connection::Connection(int port, int bufferLength) throw(SocketException)
 
     this->bufferLength = bufferLength;
     this->buffer = new unsigned char[this->bufferLength];
+    this->lengthOfLastRecivedDataSet = 0;
 }
 
 /**
@@ -47,24 +48,33 @@ Connection::~Connection()
  */
 int Connection::receiveData()
 {
-    int returned = 0;
-
     memset(&(this->otherAddress), 0 , sizeof(this->otherAddress));
     memset(this->buffer, '\0', this->bufferLength);
 
     this->otherAddressLength = sizeof(this->otherAddress);
 
-    returned = recvfrom(this->mySocket, this->buffer, this->bufferLength,
+    this->lengthOfLastRecivedDataSet = recvfrom(this->mySocket, this->buffer, this->bufferLength,
                 0, (sockaddr *) &(this->otherAddress), &this->otherAddressLength);
 
-    return returned;
+    return this->lengthOfLastRecivedDataSet;
 }
 
 /**
- * \brief Pobranie bufora z pobranymi danymi.
+ * \brief Pobranie glebokiej kopii bufora z danymi.
  * \return buffer with data.
  */
 unsigned char* Connection::getBuffer()
 {
-	return this->buffer;
+    if(this->lengthOfLastRecivedDataSet == 0)
+    {
+        return NULL;
+    }
+
+    unsigned char * returned = new unsigned char[this->lengthOfLastRecivedDataSet];
+    for(int i = 0 ; i < this->lengthOfLastRecivedDataSet ; ++i)
+    {
+        returned[i] = this->buffer[i];
+    }
+
+	return returned;
 }

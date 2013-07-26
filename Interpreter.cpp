@@ -55,6 +55,8 @@ void Interpreter::loadBuffer(unsigned char * bufferIn,int bufferLengthIn)
     {
         this->buffer[i] = bufferIn[i];
     }
+
+    delete(bufferIn);
 }
 
 /**
