@@ -1,6 +1,6 @@
 #include "Interpreter.h"
 #include "Connection.h"
-#include "monitor.h"
+#include "Semaphore.h"
 
 Semaphore ileElementow(0), moznaPisac(1);
 
@@ -18,38 +18,9 @@ void *konsument(void *);
 int main()
 {
     std::cout << "Map users to cell in process..." << std::endl;
-    /*Connection * conn;
-    Interpreter * interpreter = new Interpreter();
-    int dataSize;
-
-    try
-    {
-        conn = new Connection(4000, 1024);
-    }
-
-    catch(SocketException& e)
-    {
-        std::cout << e.what() << std::endl;
-        return -1;
-    }
-
-    while(1)
-    {
-        dataSize = conn->receiveData();
-        std::cout << "Rozmiar odebranych danych  " << dataSize << std::endl;
-        interpreter->loadBuffer(conn->getBuffer(), dataSize);
-        interpreter->interpreteData();
-        std::cout << "Version  : " << interpreter->getVersion() << std::endl;
-        std::cout << "Count    : " << interpreter->getMessagesCounter() << std::endl;
-        std::cout << "Length   : " << interpreter->getLength() << std::endl;
-        std::cout << "Writing data to file \n" << std::endl;
-        interpreter->writeBufferToFile();
-
-    }*/
 
     pthread_t prod , kons;
     int prodRet , konsRet;
-
 
     prodRet = pthread_create( &prod, NULL, producent, (void *) NULL);
     konsRet = pthread_create( &kons, NULL, konsument, (void *) NULL);
@@ -81,7 +52,6 @@ void *producent(void * ptr)
         std::cout <<  e.what()  << std::endl;
         return NULL;
     }
-
     while(1)
     {
         dataSize = conn->receiveData();
@@ -97,7 +67,6 @@ void *producent(void * ptr)
         dataSize  = 0;
         pointerToData = NULL;
     }
-
     return NULL;
 }
 
@@ -135,9 +104,6 @@ void *konsument(void * ptr)
         std::cout << "Length   : " << interpreter->getLength() << std::endl;
         std::cout << "Writing data to file \n" << std::endl;
         interpreter->writeBufferToFile();
-
     }
-
     return NULL;
-
 }
