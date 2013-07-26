@@ -1,8 +1,8 @@
 #include "Interpreter.h"
 
 /**
- * \brief Domyslny konstruktor, inicjuje mapy.
- */
+* \brief Domyslny konstruktor, inicjuje mapy.
+*/
 Interpreter::Interpreter()
 {
     fieldSizeMap.insert(std::pair<FieldName, int>(MSISDN, 9));
@@ -25,8 +25,8 @@ Interpreter::Interpreter()
 }
 
 /**
- * \brief Domyslny destruktor, zwalnia bufor.
- */
+* \brief Domyslny destruktor, zwalnia bufor.
+*/
 Interpreter::~Interpreter()
 {
     if(this->buffer != NULL)
@@ -36,12 +36,12 @@ Interpreter::~Interpreter()
 }
 
 /**
- * \brief Metoda za pomoca ktorej usuwamy stary bufor i ladujemy nowy.
- *
- * \param buffer C-style chain of data
- * \param bufferLength size of buffer
- *
- */
+* \brief Metoda za pomoca ktorej usuwamy stary bufor i ladujemy nowy.
+*
+* \param buffer C-style chain of data
+* \param bufferLength size of buffer
+*
+*/
 void Interpreter::loadBuffer(unsigned char * bufferIn,int bufferLengthIn)
 {
     if(this->buffer != NULL)
@@ -55,16 +55,14 @@ void Interpreter::loadBuffer(unsigned char * bufferIn,int bufferLengthIn)
     {
         this->buffer[i] = bufferIn[i];
     }
-
-    delete(bufferIn);
 }
 
 /**
- * \brief Interpreteowawnie danych z bufora.
- *
- * Jesli bufor pusty, albo dane nie maja sensu wszystkie
- * wartosci pol danych sa ustawiane na domyslne wartosci.
- */
+* \brief Interpreteowawnie danych z bufora.
+*
+* Jesli bufor pusty, albo dane nie maja sensu wszystkie
+* wartosci pol danych sa ustawiane na domyslne wartosci.
+*/
 void Interpreter::interpreteData()
 {
     if(this->buffer == NULL)
@@ -96,25 +94,25 @@ void Interpreter::interpreteData()
 }
 
 /**
- * \brief Pobranie pola 'version' z analizowanego bufora.
- */
+* \brief Pobranie pola 'version' z analizowanego bufora.
+*/
 int Interpreter::getVersion()
 {
     return this->version;
 }
 
 /**
- * \brief Pobranie pola 'counter' z analizowanego bufora.
- */
+* \brief Pobranie pola 'counter' z analizowanego bufora.
+*/
 int Interpreter::getMessagesCounter()
 {
     return this->messagesCounter;
 }
 
 /**
- * \brief Zapisanie bufora do pliku w postaci szesnastkowej
- * Ma na celu weryfikowanie poprawnosci przetwawrzanych danych
- */
+* \brief Zapisanie bufora do pliku w postaci szesnastkowej
+* Ma na celu weryfikowanie poprawnosci przetwawrzanych danych
+*/
 void Interpreter::writeBufferToFile()
 {
     std::ofstream writeToFile;
@@ -129,8 +127,8 @@ void Interpreter::writeBufferToFile()
 }
 
 /**
- * \brief Pobranie warosci pola 'length'
- */
+* \brief Pobranie warosci pola 'length'
+*/
 int Interpreter::getLength()
 {
     return this->length;

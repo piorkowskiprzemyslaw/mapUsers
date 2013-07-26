@@ -18,10 +18,10 @@
 using namespace std;
 
 /**
- * \brief Klasa modelujaca polaczenie majace na celu uzyskanie danych do bufora.
- *
- * \author Przemyslaw Piorkowski <piorkowskiprzemyslaw@gmail.com>
- */
+* \brief Klasa modelujaca polaczenie majace na celu uzyskanie danych do bufora.
+*
+* \author Przemyslaw Piorkowski <piorkowskiprzemyslaw@gmail.com>
+*/
 class Connection
 {
     private:
@@ -31,8 +31,6 @@ class Connection
         int bufferLength;
         /**< wskaznik na bufor danych */
         unsigned char * buffer;
-        /**< dlugosc ostatanio pobranej ramki */
-        int lengthOfLastRecivedDataSet;
         /**< struktura opisujaca adres naszej maszyny */
         sockaddr_in myAddress;
         /**< struktura opisujaca adres maszyny nadawczej */

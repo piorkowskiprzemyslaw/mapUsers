@@ -4,7 +4,7 @@ CFLAGS=-c -Wall -pedantic
 all: mapUsers
 
 mapUsers: project.o Interpreter.o Connection.o SocketException.o OptionMask.o Data.o Data.o MSISDNumber.o IMSINumber.o IMEINumber.o LAINumber.o CINumber.o RAINumber.o VMSCNumber.o SGSNumber.o EventNumber.o Helper.o
-	$(CC) project.o Interpreter.o Connection.o SocketException.o OptionMask.o Data.o MSISDNumber.o IMSINumber.o IMEINumber.o LAINumber.o CINumber.o RAINumber.o VMSCNumber.o SGSNumber.o EventNumber.o Helper.o -o mapUsers -lpthread
+	$(CC) project.o Interpreter.o Connection.o SocketException.o OptionMask.o Data.o MSISDNumber.o IMSINumber.o IMEINumber.o LAINumber.o CINumber.o RAINumber.o VMSCNumber.o SGSNumber.o EventNumber.o Helper.o -o mapUsers
 
 project.o: project.cpp Interpreter.cpp Interpreter.h Connection.cpp Connection.h
 	$(CC) $(CFLAGS) project.cpp -o project.o
@@ -25,7 +25,7 @@ OptionMask.o: OptionMask.cpp OptionMask.h FieldName.h
 	$(CC) $(CFLAGS) OptionMask.cpp -o OptionMask.o
 
 Data.o: Data.cpp Data.h FieldName.h MSISDNumber.cpp MSISDNumber.h IMSINumber.cpp IMSINumber.h IMEINumber.h IMEINumber.cpp LAINumber.h LAINumber.cpp CINumber.h CINumber.cpp RAINumber.h RAINumber.cpp VMSCNumber.h VMSCNumber.cpp SGSNumber.h SGSNumber.cpp EventNumber.h EventNumber.cpp
-	$(CC) $(CFLAGS) Data.cpp -o Data.o 
+	$(CC) $(CFLAGS) Data.cpp -o Data.o
 
 MSISDNumber.o: MSISDNumber.cpp MSISDNumber.h Helper.cpp Helper.h
 	$(CC) $(CFLAGS) MSISDNumber.cpp -o MSISDNumber.o
@@ -56,4 +56,3 @@ EventNumber.o: EventNumber.cpp EventNumber.h
 
 clean:
 	rm -rf *o mapUsers
-
