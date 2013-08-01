@@ -74,6 +74,8 @@ void Interpreter::interpreteData()
 
     unsigned int counter = 0;
 
+    this->decodedData.clear();
+
     this->version = this->buffer[counter];
     this->messagesCounter = this->buffer[++counter];
 
@@ -87,6 +89,11 @@ void Interpreter::interpreteData()
 
             this->data = new Data(&(this->buffer[counter+1]), this->getLength(), &(this->fieldSizeMap), &(this->optionMaskMap));
             this->data->decode();
+
+            this->decodedData.push_back(new AnonymousMockup(this->data->getMNC(),
+                                                            this->data->getLAC(),
+                                                            this->data->getCI(),
+                                                            this->data->getEventID()));
 
             counter += this->length;
 
@@ -134,4 +141,9 @@ void Interpreter::writeBufferToFile()
 int Interpreter::getLength()
 {
     return this->length;
+}
+
+std::list<AnonymousMockup *> Interpreter::getDecodedData()
+{
+    return this->decodedData;
 }

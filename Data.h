@@ -59,7 +59,10 @@ class Data
         ~Data();
         void decode();
         unsigned int getDataLength();
-
+        unsigned int getMNC();
+        unsigned int getLAC();
+        unsigned int getCI();
+        int getEventID();
 };
 
 #endif // DATA_H

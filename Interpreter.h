@@ -4,10 +4,12 @@
 #include <iostream>
 #include <fstream>
 #include <map>
+#include <list>
 #include <netinet/in.h>
 #include "FieldName.h"
 #include "OptionMask.h"
 #include "Data.h"
+#include "AnonymousMockup.h"
 
 /**
  *  \brief Klasa interpretujaca otrzymany  bufor z danymi wedlug standardu opisanego
@@ -36,6 +38,8 @@ class Interpreter
         unsigned char length;
         /**< Pole data z ramki udp */
         Data * data;
+        /**< Lista przetworzonych danych */
+        std::list<AnonymousMockup *> decodedData;
 
     public:
         Interpreter();
@@ -46,6 +50,7 @@ class Interpreter
         int getMessagesCounter();
         int getLength();
         void writeBufferToFile();
+        std::list<AnonymousMockup *> getDecodedData();
 
 };
 

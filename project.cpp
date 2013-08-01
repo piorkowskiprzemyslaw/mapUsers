@@ -1,13 +1,18 @@
 #include "Interpreter.h"
 #include "Connection.h"
 #include "Semaphore.h"
+#include "AnonymousMockup.h"
 
 Semaphore ileElementow(0), moznaPisac(1);
 
+Semaphore moznaPobierac(0), moznaZapisywac(1);
+
 std::list<std::pair<unsigned char *, int> > sharedBuffer;
+std::list<AnonymousMockup *> sendToDatabase;
 
 void *producent(void *);
 void *konsument(void *);
+void *zapisujacy(void *);
 
 /**
  * \brief Program mapujacy uzytkownikow do odpowiednich CI
@@ -19,14 +24,16 @@ int main()
 {
     std::cout << "Map users to cell in process..." << std::endl;
 
-    pthread_t prod , kons;
-    int prodRet , konsRet;
+    pthread_t prod , kons , zapis;
+    int prodRet , konsRet, zapisRet;
 
     prodRet = pthread_create( &prod, NULL, producent, (void *) NULL);
     konsRet = pthread_create( &kons, NULL, konsument, (void *) NULL);
+    zapisRet = pthread_create( &zapis, NULL, zapisujacy, (void *) NULL);
 
     pthread_join(prod, NULL);
     pthread_join(kons, NULL);
+    pthread_join(zapis, NULL);
 
     return 0;
 }
@@ -81,6 +88,7 @@ void *konsument(void * ptr)
 {
     Interpreter * interpreter = new Interpreter();
     std::pair<unsigned char  *, int> elementTaken;
+    std::list<AnonymousMockup *> lista;
     unsigned char * data = NULL;
     int dataLength = 0;
 
@@ -99,11 +107,47 @@ void *konsument(void * ptr)
 
         interpreter->loadBuffer(data, dataLength);
         interpreter->interpreteData();
-        std::cout << "Version  : " << interpreter->getVersion() << std::endl;
-        std::cout << "Count    : " << interpreter->getMessagesCounter() << std::endl;
-        std::cout << "Length   : " << interpreter->getLength() << std::endl;
-        std::cout << "Writing data to file \n" << std::endl;
+        lista = interpreter->getDecodedData();
+
+        /**< Sekcja krytycznaa!!! */
+
+        moznaZapisywac.p();
+
+        for(std::list<AnonymousMockup *>::iterator it = lista.begin() ; it != lista.end() ; ++it)
+        {
+            sendToDatabase.push_back(*it);
+        }
+
+        if(sendToDatabase.size() > 1)
+        {
+            moznaPobierac.v();
+        }
+
+        moznaZapisywac.v();
+        /**< Koniec sekcji krytycznej ! */
+
         interpreter->writeBufferToFile();
     }
+    return NULL;
+}
+
+/** \brief Funkcja dla ktorej uruchamiany jest watek buforujacy i zapisujacy do bazy danych
+ *
+ * \param ptr void*
+ * \return void*
+ *
+ */
+void *zapisujacy(void * ptr)
+{
+    moznaPobierac.p();
+    moznaZapisywac.p();
+
+    for(std::list<AnonymousMockup *>::iterator it = sendToDatabase.begin() ;
+        it != sendToDatabase.end() ; ++it)
+    {
+        std::cout << (*it)->getLAC();
+    }
+
+    moznaZapisywac.v();
     return NULL;
 }

@@ -3,8 +3,8 @@ CFLAGS=-c -Wall -pedantic
 
 all: mapUsers
 
-mapUsers: project.o Interpreter.o Connection.o SocketException.o OptionMask.o Data.o Data.o MSISDNumber.o IMSINumber.o IMEINumber.o LAINumber.o CINumber.o RAINumber.o VMSCNumber.o SGSNumber.o EventNumber.o Helper.o
-	$(CC) project.o Interpreter.o Connection.o SocketException.o OptionMask.o Data.o MSISDNumber.o IMSINumber.o IMEINumber.o LAINumber.o CINumber.o RAINumber.o VMSCNumber.o SGSNumber.o EventNumber.o Helper.o -o mapUsers -lpthread
+mapUsers: project.o Interpreter.o Connection.o SocketException.o OptionMask.o Data.o Data.o MSISDNumber.o IMSINumber.o IMEINumber.o LAINumber.o CINumber.o RAINumber.o VMSCNumber.o SGSNumber.o EventNumber.o Helper.o AnonymousMockup.o
+	$(CC) project.o Interpreter.o Connection.o SocketException.o OptionMask.o Data.o MSISDNumber.o IMSINumber.o IMEINumber.o LAINumber.o CINumber.o RAINumber.o VMSCNumber.o SGSNumber.o EventNumber.o Helper.o AnonymousMockup.o -o mapUsers -lpthread
 
 project.o: project.cpp Interpreter.cpp Interpreter.h Connection.cpp Connection.h
 	$(CC) $(CFLAGS) project.cpp -o project.o
@@ -53,6 +53,9 @@ SGSNumber.o: SGSNumber.cpp SGSNumber.h
 
 EventNumber.o: EventNumber.cpp EventNumber.h
 	$(CC) $(CFLAGS) EventNumber.cpp -o EventNumber.o
+
+AnonymousMockup.o: AnonymousMockup.cpp AnonymousMockup.h
+	$(CC) $(CFLAGS) AnonymousMockup.cpp -o AnonymousMockup.o
 
 clean:
 	rm -rf *o mapUsers

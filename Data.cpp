@@ -123,3 +123,23 @@ unsigned int Data::getDataLength()
 {
     return this->dataLength;
 }
+
+unsigned int Data::getMNC()
+{
+    return this->lai->getMNCNumber();
+}
+
+unsigned int Data::getLAC()
+{
+    return this->lai->getLAC();
+}
+
+unsigned int Data::getCI()
+{
+    return this->ci->getNumber();
+}
+
+int Data::getEventID()
+{
+    return this->event->getEventNumber();
+}
