@@ -2,6 +2,7 @@
 #include "Connection.h"
 #include "Semaphore.h"
 #include "AnonymousMockup.h"
+#include "SaveToDatabase.h"
 
 Semaphore ileElementow(0), moznaPisac(1);
 
@@ -104,12 +105,9 @@ void *konsument(void * ptr)
 
         data = elementTaken.first;
         dataLength = elementTaken.second;
-
         interpreter->loadBuffer(data, dataLength);
         interpreter->interpreteData();
         lista = interpreter->getDecodedData();
-
-        /**< Sekcja krytycznaa!!! */
 
         moznaZapisywac.p();
 
@@ -117,14 +115,13 @@ void *konsument(void * ptr)
         {
             sendToDatabase.push_back(*it);
         }
-
-        if(sendToDatabase.size() > 1)
+        /**< Buforowawnie minimalnej ilosci do insertowania w bazie danych */
+        if(sendToDatabase.size() > 0)
         {
             moznaPobierac.v();
         }
 
         moznaZapisywac.v();
-        /**< Koniec sekcji krytycznej ! */
 
         interpreter->writeBufferToFile();
     }
@@ -139,15 +136,24 @@ void *konsument(void * ptr)
  */
 void *zapisujacy(void * ptr)
 {
-    moznaPobierac.p();
-    moznaZapisywac.p();
+    std::list<AnonymousMockup *> internalList;
+    AnonymousMockup * anonymousMockup;
 
-    for(std::list<AnonymousMockup *>::iterator it = sendToDatabase.begin() ;
-        it != sendToDatabase.end() ; ++it)
+    while(1)
     {
-        std::cout << (*it)->getLAC();
-    }
+        moznaPobierac.p();
+        moznaZapisywac.p();
+        for(std::list<AnonymousMockup *>::iterator it = sendToDatabase.begin() ;
+            it != sendToDatabase.end() ; ++it)
+        {
+            //TO DO !!!!
+        }
+        sendToDatabase.clear();
+        moznaZapisywac.v();
 
-    moznaZapisywac.v();
+        SaveToDatabase saveToDatabase(internalList);
+
+
+    }
     return NULL;
 }
