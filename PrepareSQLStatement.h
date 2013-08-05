@@ -11,8 +11,9 @@ class PrepareSQLStatement
     private:
         std::string statement;
     public:
-        PrepareSQLStatement(AnonymousMockup * mockup);
+        PrepareSQLStatement();
         ~PrepareSQLStatement();
+        void loadMockup(AnonymousMockup * mockup);
         std::string getStatementToExecute();
 };
 

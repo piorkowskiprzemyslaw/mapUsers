@@ -116,7 +116,7 @@ void *konsument(void * ptr)
             sendToDatabase.push_back(*it);
         }
         /**< Buforowawnie minimalnej ilosci do insertowania w bazie danych */
-        if(sendToDatabase.size() > 0)
+        if(sendToDatabase.size() > 3)
         {
             moznaPobierac.v();
         }

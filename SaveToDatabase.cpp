@@ -23,11 +23,25 @@ SaveToDatabase::~SaveToDatabase()
 
 void SaveToDatabase::push()
 {
+    pqxx::connection c("dbname=anonymousevent user=anonymousDatabase");
+    pqxx::work txn(c);
+    PrepareSQLStatement prepareSQLStatement;
+    std::string statement;
+
     for(std::list<AnonymousMockup *>::iterator it = internalList.begin() ;
         it != internalList.end() ; ++it)
         {
-            PrepareSQLStatement statement((*it));
-            std::cout << statement.getStatementToExecute()  << std::endl;
+            prepareSQLStatement.loadMockup(*it);
+            statement = prepareSQLStatement.getStatementToExecute();
 
+            try{
+                txn.exec(statement.c_str());
+            }catch(std::exception e)
+            {
+                std::cout << e.what() << std::endl;
+            }
         }
+
+    std::cout << "Push successfull!" << std::endl;
+    txn.commit();
 }

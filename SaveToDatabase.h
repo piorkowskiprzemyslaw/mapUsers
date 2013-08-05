@@ -3,6 +3,9 @@
 
 #include <iostream>
 #include <list>
+#include <pqxx/pqxx>
+#include <string>
+#include <exception>
 #include "AnonymousMockup.h"
 #include "PrepareSQLStatement.h"
 
