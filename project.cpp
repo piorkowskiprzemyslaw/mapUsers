@@ -143,17 +143,20 @@ void *zapisujacy(void * ptr)
     {
         moznaPobierac.p();
         moznaZapisywac.p();
-        for(std::list<AnonymousMockup *>::iterator it = sendToDatabase.begin() ;
-            it != sendToDatabase.end() ; ++it)
+
+        while(sendToDatabase.size() > 0 )
         {
-            //TO DO !!!!
+            anonymousMockup = sendToDatabase.front();
+            sendToDatabase.pop_front();
+            internalList.push_back(anonymousMockup);
         }
-        sendToDatabase.clear();
+
         moznaZapisywac.v();
 
         SaveToDatabase saveToDatabase(internalList);
+        saveToDatabase.push();
 
-
+        internalList.clear();
     }
     return NULL;
 }
