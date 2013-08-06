@@ -79,11 +79,13 @@ void *producent(void * ptr)
 }
 
 
-/** \brief Funkcja dla której jest uruchamiany watek konsumenta
+/** \brief Funkcja dla której jest uruchamiany watek konsumenta.
  *
  * \param ptr void*
  * \return void*
  *
+ *  Odbiera i przetwarza strumien odebrany pakujac go w makiete i wysylajac do
+ *  zapisania do bazy danych.
  */
 void *konsument(void * ptr)
 {
@@ -128,7 +130,7 @@ void *konsument(void * ptr)
     return NULL;
 }
 
-/** \brief Funkcja dla ktorej uruchamiany jest watek buforujacy i zapisujacy do bazy danych
+/** \brief Funkcja dla ktorej uruchamiany jest watek zapisujacy do bazy danych
  *
  * \param ptr void*
  * \return void*
@@ -158,5 +160,6 @@ void *zapisujacy(void * ptr)
 
         internalList.clear();
     }
+
     return NULL;
 }

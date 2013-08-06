@@ -16,7 +16,12 @@
 class SaveToDatabase
 {
     private:
-        std::list<AnonymousMockup *> internalList;
+        std::list<AnonymousMockup *>     internalList;
+        pqxx::connection*                cellIDConn;
+        pqxx::work*                      cellID;
+        pqxx::connection*                anonymousConn;
+        pqxx::work*                      anonymous;
+
     public:
         SaveToDatabase(std::list<AnonymousMockup *> internalList);
         void push();
